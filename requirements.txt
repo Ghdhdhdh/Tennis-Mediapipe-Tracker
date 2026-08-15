@@ -1,0 +1,5 @@
+streamlit>=1.61
+mediapipe>=1.0
+opencv-python-headless>=4.10
+moviepy>=2.0
+numpy>=1.26
