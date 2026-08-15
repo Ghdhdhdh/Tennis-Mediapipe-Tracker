@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tennis Stroke Analyzer</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>🎾 Tennis Stroke Analyzer</h1>
+    <p class="lede">
+      MediaPipe Pose looks at your body mechanics — leg drive, rotation, arm
+      extension, contact position, balance, and follow-through — and scores
+      the stroke out of <strong>16.5</strong>, entirely in your browser. Your
+      video never leaves your device.
+    </p>
+  </header>
+
+  <section class="card" id="step1">
+    <h2>1. Choose your stroke</h2>
+    <div class="row">
+      <fieldset>
+        <legend>Stroke type</legend>
+        <label><input type="radio" name="stroke" value="Serve" checked /> Serve</label>
+        <label><input type="radio" name="stroke" value="Forehand Groundstroke" /> Forehand Groundstroke</label>
+        <label><input type="radio" name="stroke" value="Backhand Groundstroke" /> Backhand Groundstroke</label>
+      </fieldset>
+      <fieldset>
+        <legend>Dominant (racket) hand</legend>
+        <label><input type="radio" name="hand" value="RIGHT" checked /> Right-handed</label>
+        <label><input type="radio" name="hand" value="LEFT" /> Left-handed</label>
+      </fieldset>
+    </div>
+  </section>
+
+  <section class="card" id="step2">
+    <h2>2. Upload your video</h2>
+    <input type="file" id="fileInput" accept="video/*" />
+    <p class="hint">Side-on camera angle, full body in frame, good lighting.</p>
+    <video id="sourceVideo" playsinline muted style="display:none"></video>
+    <p class="meta" id="videoMeta"></p>
+  </section>
+
+  <section class="card hidden" id="step3">
+    <h2>3. Trim to the stroke</h2>
+    <p class="hint">Drag the handles to cover the wind-up through the follow-through.</p>
+    <div class="trim-slider">
+      <input type="range" id="trimStart" min="0" max="1" step="0.05" value="0" />
+      <input type="range" id="trimEnd" min="0" max="1" step="0.05" value="1" />
+    </div>
+    <div class="trim-labels">
+      <span id="trimStartLabel">0.00s</span>
+      <span id="trimEndLabel">0.00s</span>
+    </div>
+    <button id="previewBtn" type="button">▶ Preview trimmed clip</button>
+  </section>
+
+  <section class="card hidden" id="step4">
+    <h2>4. Analyze</h2>
+    <button id="analyzeBtn" type="button" class="primary">Analyze stroke</button>
+    <div class="progress hidden" id="progressWrap">
+      <div class="progress-bar" id="progressBar"></div>
+      <span id="progressLabel"></span>
+    </div>
+  </section>
+
+  <section class="card hidden" id="resultsSection">
+    <div id="warnings"></div>
+    <h2>Score: <span id="scoreTotal"></span> / 16.5</h2>
+    <div class="progress score-progress"><div class="progress-bar" id="scoreBar"></div></div>
+    <h3>Breakdown</h3>
+    <div id="criteriaList"></div>
+    <p class="meta" id="detectionRateLabel"></p>
+  </section>
+
+  <button id="resetBtn" class="ghost hidden">Start over</button>
+</div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
